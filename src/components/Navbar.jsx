@@ -19,6 +19,10 @@ const menuItems = [
     name: "Cart",
     href: "/cart",
   },
+  {
+    name:"Ask AI",
+    href:"/askai"
+  }
 ];
 
 function Navbar() {

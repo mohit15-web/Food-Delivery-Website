@@ -2,6 +2,7 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import PropTypes from "prop-types";
 import { restaurants } from "../Restaurant";
+import { useEffect } from "react";
 const responsive = {
   superLargeDesktop: {
     // the naming can be any, depends on you.
@@ -23,8 +24,14 @@ const responsive = {
 };
 
 function Slider() {
-    
   let IMG_CDN_URL = `https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/`;
+  
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, []);
   return (
     <div className=" dark:bg-black dark:text-white">
       <Carousel responsive={responsive}>
