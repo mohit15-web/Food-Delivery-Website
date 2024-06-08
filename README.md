@@ -3,6 +3,9 @@
 ## 📝 Overview
 This is a food delivery web application built using React. The application allows users to browse various food items, add them to a cart, and place orders.
 
+![Home page](https://imgur.com/a/Cb3mirf)
+
+
 ## ✨ Features
 - 🔒 User authentication (sign up, login, logout)
 - 🍽️ Browse food items by categories
