@@ -1,10 +1,9 @@
-# 🍔 Food Delivery Website
+![Screenshot (831)](https://github.com/mohit15-web/Food-Delivery-Website/assets/125914620/7447b3ea-eafd-4277-9c42-5b4962e9fe99)# 🍔 Food Delivery Website
 
 ## 📝 Overview
 This is a food delivery web application built using React. The application allows users to browse various food items, add them to a cart, and place orders.
 
-<img src="https://imgur.com/a/Cb3mirf" alt="Project Logo" width="200" />
-
+![Screenshot](Uploading Screenshot (831).png)
 
 
 ## ✨ Features
