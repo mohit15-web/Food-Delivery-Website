@@ -5,9 +5,7 @@ import { Car, Shield } from "lucide-react";
 import Card from "../../components/Card";
 import Slider from "../../components/Carousel";
 import { useEffect, useState } from "react";
-import { API_URL } from "../../constants";
 import Loader from "../../Loader/Loader";
-import Food from "../Foods/Food";
 import getRestaurants from "../../utils/FetchApi";
 
 const Home = () => {

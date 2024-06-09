@@ -10,6 +10,8 @@ import { Cart } from "./pages/Cart/Cart";
 import ScrollToTop from "./components/ScrollToTop";
 import Food from "./pages/Foods/Food";
 import AskAi from "./pages/AskAI/AskAi";
+import Payment from "./components/Payment";
+import { Checkout } from "./components/Checkout";
 const App = () => {
   return (
     <div className="App dark:bg-black">
@@ -21,6 +23,8 @@ const App = () => {
         <Route path="/cart" element={<Cart />} />
         <Route path="/food" element={<Food />} />
         <Route path="/askai" element={<AskAi />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/payment/" element={<Payment />} />
         <Route path="/ReastaurantDetail/:id" element={<RestaurantDetails />} />
       </Routes>
       <Footer />

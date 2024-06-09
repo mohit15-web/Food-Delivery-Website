@@ -65,14 +65,14 @@ function RestaurantDetails() {
     <Loader />
   ) : (
     <div className="pt-44 flex flex-col items-center relative">
-      <h1 className="text-black text-2xl absolute left-96 top-32">
+      <h1 className="text-black text-xl xl:text-2xl absolute left-20 xl:left-96 top-32">
         Recommended ({menuItems?.length})
       </h1>
       <div>
         {menuItems.map((item) => (
           <div
             key={item?.id}
-            className="flex justify-between shadow-lg px-6 py-12 mb-10 w-[750px] rounded-xl"
+            className="flex justify-between shadow-lg px-6 py-12 mb-10 w-[400px] sm:w-[550px] xl:w-[750px] rounded-xl md:w-[700px]"
           >
             <div>
               <h3 className="text-2xl">{item?.name?.slice(0, 30)} .....</h3>
@@ -82,20 +82,20 @@ function RestaurantDetails() {
               <span className="inline-block bg-yellow-400 text-white text-sm font-semibold mr-2 px-2.5 py-0.5 rounded mt-2">
                 {item?.ratings?.aggregatedRating?.rating} ★
               </span>
-              <p className="text-gray-500 mt-3 w-[450px]">
+              <p className="text-gray-500 mt-3 w-[300px] xl:w-[450px]">
                 {item?.description?.slice(0, 100)}
               </p>
             </div>
             <div className="relative">
               {item?.imageId && (
                 <img
-                  className="w-48 h-40 object-cover rounded-xl"
+                  className=" w-40 h-32 xl:w-48 xl:h-40 object-cover rounded-xl"
                   src={ITEM_IMG_CDN_URL + item?.imageId}
                   alt={item?.name}
                 />
               )}
               <button
-                className="absolute right-10 bg-white text-green-600 font-bold shadow-xl px-6 py-3 rounded-lg top-32"
+                className="absolute right-4 bg-white text-green-600 font-bold shadow-xl px-6 py-3 rounded-lg top-32 w-32 xl:w-32"
                 onClick={() => {
                   if(user === null){
                     toast.error("Please login to add item to cart",{

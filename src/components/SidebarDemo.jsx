@@ -1,6 +1,6 @@
 import { useState } from "react";
 import loginImage from "../assets/loginImage.avif";
-import { getRedirectResult, GoogleAuthProvider } from "firebase/auth";
+import {  GoogleAuthProvider } from "firebase/auth";
 import { X } from "lucide-react";
 import PropTypes from "prop-types";
 import { signInWithPopup } from "firebase/auth";
@@ -15,8 +15,8 @@ const SidebarDemo = ({ open, setOpen }) => {
     console.log("clicked");
     signInWithPopup(auth, provider)
       .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
+        // const credential = GoogleAuthProvider.credentialFromResult(result);
+        // const token = credential.accessToken;
         const user = result.user;
         localStorage.setItem("user", JSON.stringify(user));
         console.log(user , " user");

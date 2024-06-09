@@ -4,10 +4,11 @@ import { IMG_CDN_URL } from "../../constants";
 import { REMOVE_FORM_CART } from "../../store/Reducers";
 import cartLogo from "../../assets/SVG/cart.svg";
 import { toast } from "react-toastify";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 export function Cart() {
+  const navigate  = useNavigate()
   const [total, setTotal] = useState(0);
   const cart = useSelector((state) => state.cart.cartItems);
   const dispatch = useDispatch();
@@ -29,6 +30,10 @@ export function Cart() {
 
     setTotal(sum);
   }, [cart]);
+
+  const handlePayment = () => {
+    navigate('/checkout')
+  }
   return cart.length === 0 ? (
     <div className="py-60 flex flex-col justify-center items-center dark:bg-black dark:text-white">
       <img src={cartLogo} alt="cartLogo" className="h-60 w-60" />
@@ -103,6 +108,7 @@ export function Cart() {
           <button
             type="button"
             className="rounded-md border border-black px-3 py-2 text-sm font-semibold text-black shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black dark:border-white dark:text-white"
+            onClick={() => handlePayment(total)}
           >
             Checkout
           </button>

@@ -7,7 +7,7 @@ import SidebarDemo from "./SidebarDemo";
 import { useTheme } from "../ThemeContext/ThemseContext"; // Make sure the file path is correct
 import { toast } from "react-toastify";
 
-const menuItems = [
+let menuItems = [
   {
     name: "Home",
     href: "/",
@@ -17,9 +17,14 @@ const menuItems = [
     href: "/food",
   },
   {
+    name: "Cart",
+    href: "/cart",
+  },
+  {
     name: "Ask AI",
     href: "/askai",
   },
+  
 ];
 
 function Navbar() {
@@ -41,15 +46,6 @@ function Navbar() {
   };
   const user = JSON.parse(localStorage.getItem("user"));
   console.log(user?.displayName, "user");
-
-  // Conditionally add the Cart item if the user is logged in
-  const conditionalMenuItems = [...menuItems];
-  if (user !== null) {
-    conditionalMenuItems.push({
-      name: "Cart",
-      href: "/cart",
-    });
-  }
 
   return (
     <nav className="fixed z-50 w-full bg-white pb-6 px-10 xl:p-0 dark:bg-black dark:text-white">
@@ -84,15 +80,18 @@ function Navbar() {
           </button>
           {user && (
             <>
-              <button className="px-6 py-2 bg-red-500 rounded-md text-white"
-              onClick={() => {
-                localStorage.removeItem('user')
-                window.location.reload()
-                toast.success("Logout successfully",{
-                  position: "top-center",
-                })
-              }}
-              >logout</button>
+              <button
+                className="px-6 py-2 bg-red-500 rounded-md text-white"
+                onClick={() => {
+                  localStorage.removeItem("user");
+                  window.location.reload();
+                  toast.success("Logout successfully", {
+                    position: "top-center",
+                  });
+                }}
+              >
+                logout
+              </button>
             </>
           )}
         </div>
