@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Menu, MoonIcon, Sun, X } from "lucide-react";
 import { Link } from "react-router-dom";
-import logo from '../assets/logo.png';
-import profileSvg from '../assets/SVG/profile.svg';
+import logo from "../assets/logo.png";
+import profileSvg from "../assets/SVG/profile.svg";
 import SidebarDemo from "./SidebarDemo";
 import { useTheme } from "../ThemeContext/ThemseContext"; // Make sure the file path is correct
+import { toast } from "react-toastify";
 
 const menuItems = [
   {
@@ -12,17 +13,13 @@ const menuItems = [
     href: "/",
   },
   {
-    name: "Reviews",
-    href: "/reviews",
+    name: "Food",
+    href: "/food",
   },
   {
-    name: "Cart",
-    href: "/cart",
+    name: "Ask AI",
+    href: "/askai",
   },
-  {
-    name:"Ask AI",
-    href:"/askai"
-  }
 ];
 
 function Navbar() {
@@ -35,13 +32,24 @@ function Navbar() {
   };
 
   const toggleSidebar = () => {
-    setIsMenuOpen(false)
+    setIsMenuOpen(false);
     setShowSidebar(!showSidebar);
   };
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
   };
+  const user = JSON.parse(localStorage.getItem("user"));
+  console.log(user?.displayName, "user");
+
+  // Conditionally add the Cart item if the user is logged in
+  const conditionalMenuItems = [...menuItems];
+  if (user !== null) {
+    conditionalMenuItems.push({
+      name: "Cart",
+      href: "/cart",
+    });
+  }
 
   return (
     <nav className="fixed z-50 w-full bg-white pb-6 px-10 xl:p-0 dark:bg-black dark:text-white">
@@ -68,8 +76,25 @@ function Navbar() {
             {!darkMode ? <Sun /> : <MoonIcon />}
           </button>
           <button type="button" onClick={toggleSidebar}>
-            <img src={profileSvg} alt="profile" className="h-10 w-8" />
+            {!user ? (
+              <img src={profileSvg} alt="profile" className="h-10 w-8" />
+            ) : (
+              <p>{user.displayName}</p>
+            )}
           </button>
+          {user && (
+            <>
+              <button className="px-6 py-2 bg-red-500 rounded-md text-white"
+              onClick={() => {
+                localStorage.removeItem('user')
+                window.location.reload()
+                toast.success("Logout successfully",{
+                  position: "top-center",
+                })
+              }}
+              >logout</button>
+            </>
+          )}
         </div>
         <div className="lg:hidden">
           <Menu onClick={toggleMenu} className="h-6 w-6 cursor-pointer" />
@@ -99,22 +124,27 @@ function Navbar() {
                   {menuItems.map((item) => (
                     <Link key={item.name} to={item.href}>
                       <p className="-m-3 flex items-center rounded-md p-3 text-sm font-semibold hover:bg-gray-50">
-                        <span className="ml-3 text-base font-medium text-gray-900">{item.name}</span>
+                        <span className="ml-3 text-base font-medium text-gray-900">
+                          {item.name}
+                        </span>
                       </p>
                     </Link>
                   ))}
                 </nav>
               </div>
-              <button className="bg-red-600 rounded-lg mt-4 text-white px-6 py-2"
-              onClick={toggleSidebar}
+              <button
+                className="bg-red-600 rounded-lg mt-4 text-white px-6 py-2"
+                onClick={toggleSidebar}
               >
-              Login 
-            </button>
+                Login
+              </button>
             </div>
           </div>
         </div>
       )}
-      {showSidebar && <SidebarDemo open={showSidebar} setOpen={setShowSidebar} />}
+      {showSidebar && (
+        <SidebarDemo open={showSidebar} setOpen={setShowSidebar} />
+      )}
     </nav>
   );
 }

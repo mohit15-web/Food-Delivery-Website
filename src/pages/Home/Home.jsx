@@ -5,51 +5,28 @@ import { Car, Shield } from "lucide-react";
 import Card from "../../components/Card";
 import Slider from "../../components/Carousel";
 import { useEffect, useState } from "react";
-import {API_URL } from "../../constants";
+import { API_URL } from "../../constants";
 import Loader from "../../Loader/Loader";
+import Food from "../Foods/Food";
+import getRestaurants from "../../utils/FetchApi";
 
 const Home = () => {
   const [count, setCount] = useState(12);
   const [allRestaurants, setAllRestaurants] = useState([]);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [loading, setLoading] = useState(true);
-
   useEffect(() => {
-    getRestaurants();
+    async function getData() {
+      let data = await getRestaurants();
+      setAllRestaurants(data);
+    }
+
+    getData();
   }, []);
 
-  async function getRestaurants() {
-    try {
-      const response = await fetch(API_URL);
-      const json = await response.json();
-
-      function checkJsonData(jsonData) {
-        for (let i = 0; i < jsonData?.data?.cards.length; i++) {
-          let checkData =
-            json?.data?.cards[i]?.card?.card?.gridElements?.infoWithStyle
-              ?.restaurants;
-
-          if (checkData !== undefined) {
-            return checkData;
-          }
-        }
-      }
-
-      const resData = checkJsonData(json);
-
-      setAllRestaurants(resData);
-      setLoading(false);  
-    } catch (error) {
-      console.error("Error fetching restaurant data:", error);
-      setErrorMessage("Failed to fetch restaurant data.");
-      setLoading(false);  // Set loading to false after error
-    }
-  }
-
-  if (loading) return <div>Loading...</div>;  // Display loading state
-  if (!allRestaurants.length) return <div>No restaurants available.</div>;  // Handle case when no restaurants are available
   console.log(allRestaurants);
-  return allRestaurants.length === 0 ? ( <Loader /> ) : (
+
+  return allRestaurants.length === 0 ? (
+    <Loader />
+  ) : (
     <main>
       <div
         className="flex px-10 xl:px-36 flex-wrap justify-between pb-20 xl:pb-10
@@ -101,7 +78,7 @@ const Home = () => {
           />
         </div>
       </div>
-      <div className="py-20 xl:px-32 dark:bg-black dark:text-white">
+      <div className="py-10 xl:px-32 dark:bg-black dark:text-white">
         <h1 className="text-3xl pl-10 xl:pl-16 py-12">Whats on your mind?</h1>
         <Slider allRestaurants={allRestaurants} />
       </div>
@@ -109,18 +86,18 @@ const Home = () => {
         <h1 className="text-3xl pl-10 xl:pl-48 py-8">Popular Foods</h1>
         <Card count={count} allRestaurants={allRestaurants} />
         {count === 12 ? (
-          <div className="flex justify-center items-center py-10">
-            <h1
-              className="text-center text-lg py-3 px-6 bg-red-600 rounded-lg cursor-pointer text-white"
-              onClick={() => {
-                console.log("clicked");
-                setCount((prev) => prev + 8);
-              }}
-            >
-              View Full Menu
-            </h1>
-          </div>
-        ) : null}
+        <div className="flex justify-center items-center py-10">
+          <h1
+            className="text-center text-lg py-3 px-6 bg-red-600 rounded-lg cursor-pointer text-white"
+            onClick={() => {
+              console.log("clicked");
+              setCount((prev) => prev + 8);
+            }}
+          >
+            View Full Menu
+          </h1>
+        </div>
+      ) : null}
       </div>
     </main>
   );

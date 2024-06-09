@@ -2,7 +2,7 @@
 import "./Loader.css";
 function Loader() {
   return (
-    <div className="w-full h-screen flex justify-center items-center">
+    <div className="w-full h-screen flex justify-center items-center dark:bg-black dark:text-white">
       <div className="loader">
         <div className="truckWrapper">
           <div className="truckBody">

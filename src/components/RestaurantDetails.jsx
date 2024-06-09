@@ -8,6 +8,7 @@ import Loader from "../Loader/Loader";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { ADD_TO_CART } from "../store/Reducers";
+import { IndianRupee } from "lucide-react";
 
 function RestaurantDetails() {
   const { id } = useParams();
@@ -23,14 +24,6 @@ function RestaurantDetails() {
         `https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=21.11610&lng=79.07060&restaurantId=${id}`
       );
       const json = await response.json();
-
-      // const restaurantData =
-      //   json?.data?.cards
-      //     ?.map((x) => x.card)
-      //     ?.find((x) => x && x.card["@type"] === RESTAURANT_TYPE_KEY)?.card
-      //     ?.info || null;
-      // setRestaurant(restaurantData);
-
       const menuItemsData =
         json?.data?.cards
           ?.find((x) => x.groupedCard)
@@ -58,8 +51,15 @@ function RestaurantDetails() {
     dispatch(ADD_TO_CART(item));
     toast.success("Item added to cart!", {
       position: "top-center",
+      theme: "colored",
     });
   };
+
+  
+  const user = JSON.parse(localStorage.getItem("user"));
+  console.log(user?.displayName, "user");
+
+  console.log(menuItems);
 
   return menuItems?.length === 0 ? (
     <Loader />
@@ -76,13 +76,8 @@ function RestaurantDetails() {
           >
             <div>
               <h3 className="text-2xl">{item?.name?.slice(0, 30)} .....</h3>
-              <p className="mt-2">
-                {item?.price > 0
-                  ? new Intl.NumberFormat("en-IN", {
-                      style: "currency",
-                      currency: "INR",
-                    }).format(item?.price / 100)
-                  : " "}
+              <p className="flex mt-3">
+                  <IndianRupee/> {(item?.price || item?.defaultPrice) / 100}
               </p>
               <span className="inline-block bg-yellow-400 text-white text-sm font-semibold mr-2 px-2.5 py-0.5 rounded mt-2">
                 {item?.ratings?.aggregatedRating?.rating} ★
@@ -101,7 +96,16 @@ function RestaurantDetails() {
               )}
               <button
                 className="absolute right-10 bg-white text-green-600 font-bold shadow-xl px-6 py-3 rounded-lg top-32"
-                onClick={() => handleAddToCart(item)}
+                onClick={() => {
+                  if(user === null){
+                    toast.error("Please login to add item to cart",{
+                      position: "top-center",
+                      theme: "colored",
+                    });
+                    return
+                  }
+                  handleAddToCart(item)
+                }}
               >
                 ADD +
               </button>

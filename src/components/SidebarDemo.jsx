@@ -1,9 +1,44 @@
 import { useState } from "react";
 import loginImage from "../assets/loginImage.avif";
+import { getRedirectResult, GoogleAuthProvider } from "firebase/auth";
 import { X } from "lucide-react";
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
+import { signInWithPopup } from "firebase/auth";
+import auth from "../utils/firebase";
+import { toast } from "react-toastify";
+
 const SidebarDemo = ({ open, setOpen }) => {
   const [showSignUp, setShowSignUp] = useState(false);
+  const provider = new GoogleAuthProvider();
+
+  const handleGoogleLogin = () => {
+    console.log("clicked");
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        const user = result.user;
+        localStorage.setItem("user", JSON.stringify(user));
+        console.log(user , " user");
+        setOpen(false);
+        toast.success("Successfully Logged In",{
+          position: "top-center",
+          theme: "colored",
+        });
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.customData.email;
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        console.error(`Error: ${errorCode}, Message: ${errorMessage}, Email: ${email}, Credential: ${credential}`);
+        toast.error("Failed to Log In",{
+          position: "top-center",
+          theme: "colored",
+        });
+      });
+  };
+
   return (
     <div className="absolute dark:bg-black dark:text-white top-0 right-0 text-black border z-20 bg-white">
       <button
@@ -13,10 +48,13 @@ const SidebarDemo = ({ open, setOpen }) => {
           setOpen(false);
         }}
       >
-        {" "}
         <X />
       </button>
-      <div className={` ${open ? "w-[250px] md:w-[330px] lg:w-[350px] xl:w-[400px]" : "w-20 "}  h-screen mt-20`}>
+      <div
+        className={`${
+          open ? "w-[250px] md:w-[330px] lg:w-[350px] xl:w-[400px]" : "w-20 "
+        } h-screen mt-20`}
+      >
         <div className="flex justify-between items-center px-10 my-10">
           <div>
             <p className="text-xl font-bold text-left">
@@ -24,9 +62,10 @@ const SidebarDemo = ({ open, setOpen }) => {
             </p>
             <p>
               or{" "}
-              <span onClick={() => setShowSignUp(!showSignUp)}
+              <span
+                onClick={() => setShowSignUp(!showSignUp)}
                 className="text-orange-600 cursor-pointer"
-                >
+              >
                 {showSignUp ? "login to your account" : "create an account"}
               </span>
             </p>
@@ -63,12 +102,21 @@ const SidebarDemo = ({ open, setOpen }) => {
             className="input"
           />
           {!showSignUp ? (
-            <button className="bg-orange-600 hover:bg-orange-700 rounded-lg border text-white  px-6 py-3">
-              Login{" "}
-            </button>
+            <>
+              <button className="bg-orange-600 hover:bg-orange-700 rounded-lg border text-white  px-6 py-3">
+                Login
+              </button>
+              <p className="text-orange-600">or</p>
+              <button
+                className="bg-orange-600 hover:bg-orange-700 rounded-lg border text-white  px-6 py-3"
+                onClick={handleGoogleLogin}
+              >
+                Sign In with Google
+              </button>
+            </>
           ) : (
             <button className="bg-orange-600 hover:bg-orange-700 rounded-lg border text-white  px-6 py-3">
-              Sign Up{" "}
+              Sign Up
             </button>
           )}
         </div>
@@ -80,5 +128,6 @@ const SidebarDemo = ({ open, setOpen }) => {
 SidebarDemo.propTypes = {
   open: PropTypes.bool,
   setOpen: PropTypes.func,
-}
+};
+
 export default SidebarDemo;
