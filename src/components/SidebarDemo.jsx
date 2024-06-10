@@ -1,15 +1,23 @@
 import { useState } from "react";
 import loginImage from "../assets/loginImage.avif";
-import {  GoogleAuthProvider } from "firebase/auth";
+import {
+  GoogleAuthProvider,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import { X } from "lucide-react";
 import PropTypes from "prop-types";
 import { signInWithPopup } from "firebase/auth";
 import auth from "../utils/firebase";
 import { toast } from "react-toastify";
+import { validateForm } from "../utils/validate";
 
 const SidebarDemo = ({ open, setOpen }) => {
   const [showSignUp, setShowSignUp] = useState(false);
   const provider = new GoogleAuthProvider();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleGoogleLogin = () => {
     console.log("clicked");
@@ -18,10 +26,11 @@ const SidebarDemo = ({ open, setOpen }) => {
         // const credential = GoogleAuthProvider.credentialFromResult(result);
         // const token = credential.accessToken;
         const user = result.user;
+        console.log(user);
         localStorage.setItem("user", JSON.stringify(user));
-        console.log(user , " user");
+        console.log(user, " user");
         setOpen(false);
-        toast.success("Successfully Logged In",{
+        toast.success("Successfully Logged In", {
           position: "top-center",
           theme: "colored",
         });
@@ -31,11 +40,74 @@ const SidebarDemo = ({ open, setOpen }) => {
         const errorMessage = error.message;
         const email = error.customData.email;
         const credential = GoogleAuthProvider.credentialFromError(error);
-        console.error(`Error: ${errorCode}, Message: ${errorMessage}, Email: ${email}, Credential: ${credential}`);
-        toast.error("Failed to Log In",{
+        console.error(
+          `Error: ${errorCode}, Message: ${errorMessage}, Email: ${email}, Credential: ${credential}`
+        );
+        toast.error("Failed to Log In", {
           position: "top-center",
           theme: "colored",
         });
+      });
+  };
+
+  const handleSignup = () => {
+    const message = validateForm(email, password);
+    toast.error(message, {
+      position: "top-center",
+      theme: "colored",
+    });
+
+    if (message) return;
+
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed up
+        const user = userCredential.user;
+        console.log(user);
+        localStorage.setItem("user", JSON.stringify({displayName:name}));
+        setShowSignUp(false);
+        setEmail("")
+        setPassword("")
+        toast.success("Successfully Signed Up", {
+          position: "top-center",
+          theme: "colored",
+        });
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        toast.error(errorMessage, {
+          position: "top-center",
+          theme: "colored",
+        });
+      });
+  };
+
+  const handleLogin = () => {
+    const message = validateForm(email, password);
+    toast.error(message, {
+      position: "top-center",
+      theme: "colored",
+    });
+
+    if (message) return;
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        // localStorage.setItem("user", JSON.stringify({ displayName: name }));
+        setOpen(false);
+        toast.success("Successfully Signed In", {
+          position: "top-center",
+          theme: "colored",
+        });
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        toast.error(errorMessage, {
+          position: "top-center",
+          theme: "colored",
+        });
+        console.log(errorMessage);
       });
   };
 
@@ -84,26 +156,32 @@ const SidebarDemo = ({ open, setOpen }) => {
             <input
               placeholder="Name"
               type="text"
-              name="text"
               className="input"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
           ) : null}
 
           <input
             placeholder="Email"
-            type="text"
-            name="text"
+            type="email"
             className="input"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <input
             placeholder="Password"
-            type="text"
-            name="text"
+            type="password"
             className="input"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           {!showSignUp ? (
             <>
-              <button className="bg-orange-600 hover:bg-orange-700 rounded-lg  text-white  px-6 py-3 w-[320px]">
+              <button
+                className="bg-orange-600 hover:bg-orange-700 rounded-lg  text-white  px-6 py-3 w-[320px]"
+                onClick={handleLogin}
+              >
                 Login
               </button>
               <p className="text-orange-600">or</p>
@@ -115,7 +193,10 @@ const SidebarDemo = ({ open, setOpen }) => {
               </button>
             </>
           ) : (
-            <button className="bg-orange-600 hover:bg-orange-700 rounded-lg  text-white  px-6 py-3 w-[320px]">
+            <button
+              className="bg-orange-600 hover:bg-orange-700 rounded-lg  text-white  px-6 py-3 w-[320px]"
+              onClick={handleSignup}
+            >
               Sign Up
             </button>
           )}

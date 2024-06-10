@@ -49,7 +49,7 @@ const Card = ({ count, allRestaurants, name = "" }) => {
 };
 
 Card.propTypes = {
-  allRestaurants: PropTypes.func,
+  allRestaurants: PropTypes.array,
   count: PropTypes.number,
   name: PropTypes.string
 };

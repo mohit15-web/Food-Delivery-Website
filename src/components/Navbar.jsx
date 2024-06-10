@@ -87,6 +87,7 @@ function Navbar() {
                   window.location.reload();
                   toast.success("Logout successfully", {
                     position: "top-center",
+                    theme: "colored",
                   });
                 }}
               >
