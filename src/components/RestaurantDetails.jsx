@@ -72,7 +72,7 @@ function RestaurantDetails() {
         {menuItems.map((item) => (
           <div
             key={item?.id}
-            className="flex justify-between shadow-lg px-6 py-12 mb-10 w-[400px] sm:w-[550px] xl:w-[750px] rounded-xl md:w-[700px]"
+            className="flex justify-between shadow-lg px-6 py-12 mb-10 w-[400px] sm:w-[550px] xl:w-[750px] rounded-xl md:w-[700px] dark:text-white dark:border"
           >
             <div>
               <h3 className="text-2xl">{item?.name?.slice(0, 30)} .....</h3>
