@@ -1,9 +1,9 @@
 /* eslint-disable no-inner-declarations */
-import React, { useEffect, useState } from "react";
-import foodImg from "../../assets/SVG/food.svg";
+import { useEffect, useState } from "react";
 import Card from "../../components/Card";
 import getRestaurants from "../../utils/FetchApi";
 import { FaMagnifyingGlass } from "react-icons/fa6";
+import Loader from "../../Loader/Loader";
 function Food() {
   const [count, setCount] = useState(12);
   const [allRestaurants, setAllRestaurants] = useState([]);
@@ -18,7 +18,7 @@ function Food() {
   }, []);
 
   console.log(allRestaurants);
-  return (
+  return allRestaurants.length === 0 ? <Loader /> : (
     <div className="pt-40">
       <div className="mb-6">
         <div className="relative">

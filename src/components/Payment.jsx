@@ -3,9 +3,14 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate} from "react-router-dom";
 import loadRazorpayScript from "../utils/loadRazorpayScript";
 import PropTypes from "prop-types";
-const Payment = ({total}) => {
+import { useDispatch, } from "react-redux";
+import { MAKE_CART_EMPTY } from "../store/Reducers";
+const Payment = ({total , name , address , contact}) => {
   const navigate = useNavigate()
+  const dispatch = useDispatch();
+
   const handlePayment = async (total) => {
+
     const res = await loadRazorpayScript(
       "https://checkout.razorpay.com/v1/checkout.js"
     );
@@ -21,7 +26,7 @@ const Payment = ({total}) => {
       key: "rzp_test_d6c3GOjzsdGdZC", // Replace with your Razorpay key ID
       amount: total * 100, // Razorpay requires the amount in paise (smallest currency unit)
       currency: "INR",
-      name: "Food Delivery",
+      name: "EatsExpress",
       description: "Test Transaction",
       image: "https://example.com/your_logo",
       handler: (response) => {
@@ -33,12 +38,12 @@ const Payment = ({total}) => {
         // Further process the response here (e.g., store it in a state or send to your server for verification)
       },
       prefill: {
-        name: "Your Name",
+        name: {name},
         email: "email@example.com",
-        contact: "7249395578",
+        contact: {contact},
       },
       notes: {
-        address: "Your Address",
+        address: {address},
       },
       theme: {
         color: "#F37254",
@@ -48,6 +53,7 @@ const Payment = ({total}) => {
     const paymentObject = new window.Razorpay(options);
     paymentObject.open();
 
+    dispatch(MAKE_CART_EMPTY)
     navigate('/')
   };
 
@@ -63,7 +69,10 @@ const Payment = ({total}) => {
 };
 
 Payment.propTypes = {
-  total: PropTypes.Number,
+  total: PropTypes.number,
+  name: PropTypes.string,
+  address: PropTypes.string,
+  contact: PropTypes.number
 };
 
 export default Payment;

@@ -94,6 +94,7 @@ const SidebarDemo = ({ open, setOpen }) => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
+        console.log(user);
         // localStorage.setItem("user", JSON.stringify({ displayName: name }));
         setOpen(false);
         toast.success("Successfully Signed In", {
@@ -179,14 +180,14 @@ const SidebarDemo = ({ open, setOpen }) => {
           {!showSignUp ? (
             <>
               <button
-                className="bg-orange-600 hover:bg-orange-700 rounded-lg  text-white  px-6 py-3 w-[320px]"
+                className="bg-orange-600 hover:bg-orange-700 rounded-lg  text-white  xl:px-6 px-1 py-3 w-[200px] xl:w-[320px]"
                 onClick={handleLogin}
               >
                 Login
               </button>
               <p className="text-orange-600">or</p>
               <button
-                className="bg-orange-600 hover:bg-orange-700 rounded-lg  text-white  px-6 py-3 w-[320px]"
+                className="bg-orange-600 hover:bg-orange-700 rounded-lg  text-white  xl:px-6 px-1 py-3 w-[200px] xl:w-[320px]"
                 onClick={handleGoogleLogin}
               >
                 Sign In with Google
@@ -194,7 +195,7 @@ const SidebarDemo = ({ open, setOpen }) => {
             </>
           ) : (
             <button
-              className="bg-orange-600 hover:bg-orange-700 rounded-lg  text-white  px-6 py-3 w-[320px]"
+              className="bg-orange-600 hover:bg-orange-700 rounded-lg  text-white  xl:px-6 px-1 py-3 w-[200px] xl:w-[320px]"
               onClick={handleSignup}
             >
               Sign Up

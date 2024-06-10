@@ -7,10 +7,12 @@ import Slider from "../../components/Carousel";
 import { useEffect, useState } from "react";
 import Loader from "../../Loader/Loader";
 import getRestaurants from "../../utils/FetchApi";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [count, setCount] = useState(12);
   const [allRestaurants, setAllRestaurants] = useState([]);
+  const navigate = useNavigate()
   useEffect(() => {
     async function getData() {
       let data = await getRestaurants();
@@ -42,7 +44,9 @@ const Home = () => {
             magni delectus tenetur autem, sint veritatis!
           </p>
           <div className="my-10 flex gap-6">
-            <button className="bg-red-600 rounded-lg text-white px-6 py-3">
+            <button className="bg-red-600 rounded-lg text-white px-6 py-3"
+            onClick={()=>navigate("/food")}
+            >
               Order now {">"}{" "}
             </button>
             <a href="#popular">
