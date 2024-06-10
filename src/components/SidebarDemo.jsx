@@ -103,19 +103,19 @@ const SidebarDemo = ({ open, setOpen }) => {
           />
           {!showSignUp ? (
             <>
-              <button className="bg-orange-600 hover:bg-orange-700 rounded-lg border text-white  px-6 py-3">
+              <button className="bg-orange-600 hover:bg-orange-700 rounded-lg  text-white  px-6 py-3 w-[320px]">
                 Login
               </button>
               <p className="text-orange-600">or</p>
               <button
-                className="bg-orange-600 hover:bg-orange-700 rounded-lg border text-white  px-6 py-3"
+                className="bg-orange-600 hover:bg-orange-700 rounded-lg  text-white  px-6 py-3 w-[320px]"
                 onClick={handleGoogleLogin}
               >
                 Sign In with Google
               </button>
             </>
           ) : (
-            <button className="bg-orange-600 hover:bg-orange-700 rounded-lg border text-white  px-6 py-3">
+            <button className="bg-orange-600 hover:bg-orange-700 rounded-lg  text-white  px-6 py-3 w-[320px]">
               Sign Up
             </button>
           )}
