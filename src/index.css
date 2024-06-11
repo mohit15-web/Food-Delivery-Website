@@ -36,3 +36,18 @@ h1 {
 .input:focus {
   border: 2px solid grey;
 }
+
+
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3,
+.markdown-content h4,
+.markdown-content h5,
+.markdown-content h6 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.markdown-content p {
+  margin: 20px 0;
+}

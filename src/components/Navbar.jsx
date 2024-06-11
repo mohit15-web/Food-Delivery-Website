@@ -84,11 +84,14 @@ function Navbar() {
                 className="px-6 py-2 bg-red-500 rounded-md text-white"
                 onClick={() => {
                   localStorage.removeItem("user");
-                  window.location.reload();
                   toast.success("Logout successfully", {
                     position: "top-center",
                     theme: "colored",
                   });
+
+                  setTimeout(() => {
+                  window.location.reload();
+                  },[1500])
                 }}
               >
                 logout

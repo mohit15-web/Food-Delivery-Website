@@ -3,6 +3,7 @@ import "react-multi-carousel/lib/styles.css";
 import PropTypes from "prop-types";
 import { restaurants } from "../Restaurant";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 const responsive = {
   superLargeDesktop: {
     // the naming can be any, depends on you.
@@ -25,7 +26,7 @@ const responsive = {
 
 function Slider() {
   let IMG_CDN_URL = `https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_508,h_320,c_fill/`;
-  
+  const navigate = useNavigate()
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -35,10 +36,13 @@ function Slider() {
   return (
     <div className=" dark:bg-black dark:text-white">
       <Carousel responsive={responsive}>
-          {restaurants.map((item) => (
+          {restaurants.slice(3).map((item) => (
             <div
               key={item.info.id}
-              className="flex flex-col justify-center items-center"
+              className="flex flex-col justify-center items-center cursor-pointer"
+              onClick={() => {
+                navigate(`/ReastaurantDetail/${item.info.id}`);
+              }}
             >
               <img
                 className="h-40 w-40 object-cover rounded-full"

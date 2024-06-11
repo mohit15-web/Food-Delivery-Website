@@ -22,14 +22,13 @@ const Home = () => {
     getData();
   }, []);
 
-  console.log(allRestaurants);
 
   return allRestaurants.length === 0 ? (
     <Loader />
   ) : (
     <main>
       <div
-        className="flex px-10 xl:px-36 flex-wrap justify-between pb-20 xl:pb-10
+        className="flex px-10 xl:px-28 flex-wrap justify-between pb-20 xl:pb-10
       dark:bg-black dark:text-white pt-20"
       >
         {/* left section  */}
@@ -76,7 +75,7 @@ const Home = () => {
           <img
             src={bikeImg}
             alt="bike"
-            className=" h-[300px] xl:h-[700px] object-cover"
+            className=" h-[400px] lg:h-[400px] xl:h-[500px] 2xl:h-[700px] object-cover"
           />
         </div>
       </div>

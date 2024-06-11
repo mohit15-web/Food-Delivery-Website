@@ -17,7 +17,8 @@ const Payment = ({total , name , address , contact}) => {
 
     if (!res) {
       toast.error("Razorpay SDK failed to load. Are you online?", {
-        position: "top-center",
+        position: "bottom-right",
+        theme: "colored",
       });
       return;
     }
@@ -31,7 +32,8 @@ const Payment = ({total , name , address , contact}) => {
       image: "https://example.com/your_logo",
       handler: (response) => {
         toast.success("Payment Successful!", {
-          position: "top-center",
+          position: "bottom-right",
+          theme: "colored",
         });
         console.log(response);
 
@@ -60,7 +62,7 @@ const Payment = ({total , name , address , contact}) => {
   return (
     <button
       type="button"
-      className="rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
+      className="rounded-md border dark:border-white bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
       onClick={() => handlePayment(total)}
     >
       Make payment

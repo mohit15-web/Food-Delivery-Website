@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { ITEM_IMG_CDN_URL, MENU_ITEM_TYPE_KEY } from "../constants";
 import Loader from "../Loader/Loader";
@@ -10,16 +10,19 @@ import { IndianRupee } from "lucide-react";
 function RestaurantDetails() {
   const { id } = useParams();
   const [menuItems, setMenuItems] = useState([]);
-  const [loading, setLoading] = useState(true); // Loading state
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    getRestaurantInfo();
-  }, [id]);
-
-  async function getRestaurantInfo() {
-    setLoading(true); // Set loading to true when starting fetch
+  const getRestaurantInfo = useCallback(async () => {
+    setLoading(true);
     try {
+      const cachedData = localStorage.getItem(`restaurant-${id}`);
+      if (cachedData) {
+        setMenuItems(JSON.parse(cachedData));
+        setLoading(false);
+        return;
+      }
+
       const response = await fetch(
         `https://api.allorigins.win/get?url=${encodeURIComponent(
           `https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=21.11610&lng=79.07060&restaurantId=${id}`
@@ -46,32 +49,36 @@ function RestaurantDetails() {
           uniqueMenuItems.push(item);
         }
       });
+
       setMenuItems(uniqueMenuItems);
+      localStorage.setItem(`restaurant-${id}`, JSON.stringify(uniqueMenuItems));
     } catch (error) {
-      console.error("Error fetching restaurant data:", error);
       setMenuItems([]);
     } finally {
-      setLoading(false); // Set loading to false after fetch
+      setLoading(false);
     }
-  }
+  }, [id]);
+
+  useEffect(() => {
+    getRestaurantInfo();
+  }, [id, getRestaurantInfo]);
 
   const handleAddToCart = (item) => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (!user) {
       toast.error("Please login to add item to cart", {
-        position: "top-center",
+        position: "bottom-right",
         theme: "colored",
       });
       return;
     }
     dispatch(ADD_TO_CART(item));
     toast.success("Item added to cart!", {
-      position: "top-center",
+      position: "bottom-right",
       theme: "colored",
     });
   };
 
-  // Memoize the rendered menu items
   const renderedMenuItems = useMemo(() => {
     return menuItems.map((item) => (
       <div

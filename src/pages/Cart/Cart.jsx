@@ -1,7 +1,7 @@
 import { Trash, IndianRupee } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { IMG_CDN_URL } from "../../constants";
-import { REMOVE_FORM_CART } from "../../store/Reducers";
+import { REMOVE_FROM_CART } from "../../store/Reducers";
 import cartLogo from "../../assets/SVG/cart.svg";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
@@ -14,22 +14,24 @@ export function Cart() {
   const dispatch = useDispatch();
   console.log(cart);
   const handleRemove = (id) => {
-    dispatch(REMOVE_FORM_CART(id));
+    dispatch(REMOVE_FROM_CART(id));
     toast.success("Item removed from cart!", {
-      position: "top-center",
+      position: "bottom-right",
+      theme: "colored",
     });
   };
 
-  useEffect(() => {
-    let sum = cart.reduce((acc, curr) => {
-      console.log(curr.price);
-      return (acc += (curr.price || curr.defaultPrice) / 100);
-    }, 0);
+ 
+useEffect(() => {
+  let sum = cart.reduce((acc, curr) => {
+    const itemPrice = (curr.price || curr.defaultPrice) / 100;
+    const itemTotal = itemPrice * curr.quantity;
+    return acc + itemTotal;
+  }, 0);
 
-    console.log("sum is", sum);
-
-    setTotal(sum);
-  }, [cart]);
+  console.log("Total sum is:", sum);
+  setTotal(sum);
+}, [cart]);
 
   const handlePayment = () => {
     navigate('/checkout')
@@ -71,7 +73,7 @@ export function Cart() {
                       </p>
                     </div>
                   </div>
-                  <div className="flex divide-x text-sm">
+                  <div className="flex justify-between text-sm">
                     <button
                       type="button"
                       className="flex items-center space-x-2 px-2 py-1 pl-0"
@@ -80,10 +82,9 @@ export function Cart() {
                       <Trash size={16} />
                       <span>Remove</span>
                     </button>
-                    {/* <button type="button" className="flex items-center space-x-2 px-2 py-1">
-                    <Heart size={16} />
-                    <span>Add to favorites</span>
-                  </button> */}
+                    <button type="button" className="flex items-center space-x-2 px-2 py-1">
+                    <span> x {product?.quantity}</span>
+                  </button>
                   </div>
                 </div>
               </div>
@@ -93,7 +94,7 @@ export function Cart() {
         <div className="space-y-1 text-right">
           <p>
             Total amount:
-            <span className="font-semibold"> ₹{total}</span>
+            <span className="font-semibold"> ₹{total.toFixed(2).slice(0,7)}</span>
           </p>
         </div>
         <div className="flex justify-end space-x-4">

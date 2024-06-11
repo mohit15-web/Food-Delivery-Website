@@ -31,7 +31,7 @@ const SidebarDemo = ({ open, setOpen }) => {
         console.log(user, " user");
         setOpen(false);
         toast.success("Successfully Logged In", {
-          position: "top-center",
+          position: "bottom-right",
           theme: "colored",
         });
       })
@@ -44,7 +44,7 @@ const SidebarDemo = ({ open, setOpen }) => {
           `Error: ${errorCode}, Message: ${errorMessage}, Email: ${email}, Credential: ${credential}`
         );
         toast.error("Failed to Log In", {
-          position: "top-center",
+          position: "bottom-right",
           theme: "colored",
         });
       });
@@ -53,7 +53,7 @@ const SidebarDemo = ({ open, setOpen }) => {
   const handleSignup = () => {
     const message = validateForm(email, password);
     toast.error(message, {
-      position: "top-center",
+      position: "bottom-right",
       theme: "colored",
     });
 
@@ -64,19 +64,19 @@ const SidebarDemo = ({ open, setOpen }) => {
         // Signed up
         const user = userCredential.user;
         console.log(user);
-        localStorage.setItem("user", JSON.stringify({displayName:name}));
+        localStorage.setItem("user", JSON.stringify({ displayName: name }));
         setShowSignUp(false);
-        setEmail("")
-        setPassword("")
+        setEmail("");
+        setPassword("");
         toast.success("Successfully Signed Up", {
-          position: "top-center",
+          position: "bottom-right",
           theme: "colored",
         });
       })
       .catch((error) => {
         const errorMessage = error.message;
         toast.error(errorMessage, {
-          position: "top-center",
+          position: "bottom-right",
           theme: "colored",
         });
       });
@@ -85,7 +85,7 @@ const SidebarDemo = ({ open, setOpen }) => {
   const handleLogin = () => {
     const message = validateForm(email, password);
     toast.error(message, {
-      position: "top-center",
+      position: "bottom-right",
       theme: "colored",
     });
 
@@ -98,14 +98,14 @@ const SidebarDemo = ({ open, setOpen }) => {
         // localStorage.setItem("user", JSON.stringify({ displayName: name }));
         setOpen(false);
         toast.success("Successfully Signed In", {
-          position: "top-center",
+          position: "bottom-right",
           theme: "colored",
         });
       })
       .catch((error) => {
         const errorMessage = error.message;
         toast.error(errorMessage, {
-          position: "top-center",
+          position: "bottom-right",
           theme: "colored",
         });
         console.log(errorMessage);

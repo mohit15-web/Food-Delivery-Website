@@ -3,10 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { IMG_CDN_URL } from "../constants";
 import { useEffect, useState,} from "react";
 import Payment from "./Payment";
-import Loader from "../Loader/Loader"; // Assuming you have a Loader component
 import { toast } from "react-toastify";
-import { REMOVE_FORM_CART } from "../store/Reducers";
-
+import { REMOVE_FROM_CART } from "../store/Reducers";
+import cartLogo from '../assets/SVG/cart.svg';
 export function Checkout() {
   const cart = useSelector((state) => state.cart.cartItems);
   const dispatch = useDispatch();
@@ -27,9 +26,10 @@ export function Checkout() {
     setTotal(sum);
   }, [cart]);
   const handleRemove = (id) => {
-    dispatch(REMOVE_FORM_CART(id));
+    dispatch(REMOVE_FROM_CART(id));
     toast.success("Item removed from cart!", {
-      position: "top-center",
+      position: "bottom-right",
+      theme: "colored",
     });
   };
 
@@ -37,12 +37,15 @@ export function Checkout() {
     <div className="py-40">
       <div className="mx-auto my-4 max-w-4xl md:my-6">
         {cart.length === 0 ? (
-          <Loader /> // Display a loader while the data is being fetched
+          <div className=" flex flex-col justify-center items-center dark:bg-black dark:text-white">
+          <img src={cartLogo} alt="cartLogo" className="h-60 w-60" />
+          <h1>Cart is empty</h1>
+        </div>
         ) : (
           <div className="rounded-xl shadow">
             <div className="grid grid-cols-1 md:grid-cols-2">
               {/* Contact Info */}
-              <div className="px-5 py-6 text-gray-900 md:px-8">
+              <div className="px-5 py-6 text-gray-900 md:px-8 dark:text-white">
                 <div className="flow-root">
                   <div className="-my-6 divide-y divide-gray-200">
                     <div className="py-6">
@@ -51,7 +54,7 @@ export function Checkout() {
                           <div>
                             <h3
                               id="contact-info-heading"
-                              className="text-lg font-semibold text-gray-900"
+                              className="text-lg font-semibold"
                             >
                               Contact information
                             </h3>
@@ -63,7 +66,7 @@ export function Checkout() {
                                 Full Name
                               </label>
                               <input
-                                className="flex h-10 w-full rounded-md border border-black/30 bg-transparent px-3 py-2 text-sm placeholder:text-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                className="flex h-10 w-full rounded-md border border-black/30   dark:border-white bg-transparent px-3 py-2 text-sm placeholder:text-gray-600 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                 type="text"
                                 placeholder="Enter your name"
                                 id="name"
@@ -74,14 +77,14 @@ export function Checkout() {
                           </div>
 
                           <div className="mt-10">
-                            <h3 className="text-lg font-semibold text-gray-900">
+                            <h3 className="text-lg font-semibold ">
                               Shipping address
                             </h3>
                             <div className="mt-6 grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-3">
                               <div className="sm:col-span-3">
                                 <label
                                   htmlFor="address"
-                                  className="block text-sm font-medium text-gray-700"
+                                  className="block text-sm font-medium "
                                 >
                                   Address
                                 </label>
@@ -91,7 +94,7 @@ export function Checkout() {
                                     id="address"
                                     name="address"
                                     autoComplete="street-address"
-                                    className="flex h-10 w-full rounded-md border border-black/30 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                    className=" dark:border-white flex h-10 w-full rounded-md border border-black/30 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                     value={address}
                                     onChange={(e) => setAddress(e.target.value)}
                                   />
@@ -100,7 +103,7 @@ export function Checkout() {
                               <div>
                                 <label
                                   htmlFor="city"
-                                  className="block text-sm font-medium text-gray-700"
+                                  className="block text-sm font-medium "
                                 >
                                   City
                                 </label>
@@ -110,7 +113,7 @@ export function Checkout() {
                                     id="city"
                                     name="city"
                                     autoComplete="address-level2"
-                                    className="flex h-10 w-full rounded-md border border-black/30 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                    className="flex  dark:border-white h-10 w-full rounded-md border border-black/30 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                   />
                                 </div>
                               </div>
@@ -118,7 +121,7 @@ export function Checkout() {
                               <div>
                                 <label
                                   htmlFor="postal-code"
-                                  className="block text-sm font-medium text-gray-700"
+                                  className="block text-sm font-medium "
                                 >
                                   Postal code
                                 </label>
@@ -128,14 +131,14 @@ export function Checkout() {
                                     id="postal-code"
                                     name="postal-code"
                                     autoComplete="postal-code"
-                                    className="flex h-10 w-full rounded-md border border-black/30 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                    className="flex h-10  dark:border-white w-full rounded-md border border-black/30 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                   />
                                 </div>
                               </div>
                               <div className="sm:col-span-3">
                                 <label
                                   htmlFor="country"
-                                  className="block text-sm font-medium text-gray-700"
+                                  className="block text-sm font-medium "
                                 >
                                   Contact
                                 </label>
@@ -145,7 +148,7 @@ export function Checkout() {
                                     id="country"
                                     name="country"
                                     autoComplete="country"
-                                    className="flex h-10 w-full rounded-md border border-black/30 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                    className="flex h-10  dark:border-white w-full rounded-md border border-black/30 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-black/30 focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-50"
                                     value={contact}
                                     onChange={(e) => setContact(e.target.value)}
                                   />
@@ -168,7 +171,7 @@ export function Checkout() {
                 </div>
               </div>
               {/* Summary */}
-              <div className="bg-gray-50 px-5 py-6 text-gray-900 md:px-8">
+              <div className="px-5 py-6 text-gray-900 md:px-8 dark:text-white">
                 <h3 className="text-lg font-semibold">Order Summary</h3>
                 <ul className="mt-6 space-y-6">
                   {cart.map((product) => (
@@ -195,13 +198,13 @@ export function Checkout() {
                         </div>
                       </div>
                       <div className="ml-auto flex flex-col items-end justify-between">
-                        <p className="text-right text-sm font-bold text-gray-900">
+                        <p className="text-right text-sm font-bold ">
                           {product.price}
                         </p>
                         <button
                           type="button"
-                          className="-m-2 inline-flex rounded p-2 text-gray-400 transition-all duration-200 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
-                          onClick={handleRemove}
+                          className="-m-2 inline-flex rounded p-2 dark:text-white transition-all duration-200 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
+                          onClick={() => handleRemove(product.id)}
                         >
                           <span className="sr-only">Remove</span>
                           <X className="h-5 w-5" />
@@ -212,8 +215,8 @@ export function Checkout() {
                 </ul>
                 <div className="mt-6 border-t border-gray-200 pt-6">
                   <div className="flex justify-between">
-                    <p className="text-sm font-medium text-gray-900">Total</p>
-                    <p className="text-sm font-medium text-gray-900">
+                    <p className="text-sm font-medium">Total</p>
+                    <p className="text-sm font-medium ">
                       ₹{total.toFixed(2)}
                     </p>
                   </div>
