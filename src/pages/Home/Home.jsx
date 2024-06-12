@@ -2,17 +2,18 @@
 import bikeImg from "../../assets/bike.png";
 import "../../index.css";
 import { Car, Shield } from "lucide-react";
-import Card from "../../components/Card";
 import Slider from "../../components/Carousel";
 import { useEffect, useState } from "react";
-import Loader from "../../Loader/Loader";
 import getRestaurants from "../../utils/FetchApi";
 import { useNavigate } from "react-router-dom";
+import Restaurants from "../../components/Restaurants";
 
 const Home = () => {
   const [count, setCount] = useState(12);
   const [allRestaurants, setAllRestaurants] = useState([]);
   const navigate = useNavigate()
+
+  
   useEffect(() => {
     async function getData() {
       let data = await getRestaurants();
@@ -23,13 +24,11 @@ const Home = () => {
   }, []);
 
 
-  return allRestaurants.length === 0 ? (
-    <Loader />
-  ) : (
+  return (
     <main>
       <div
         className="flex px-10 xl:px-28 flex-wrap justify-between pb-20 xl:pb-10
-      dark:bg-black dark:text-white pt-20"
+      dark:bg-[rgb(32,33,36)] dark:text-white pt-20"
       >
         {/* left section  */}
         <div className=" pt-20">
@@ -79,13 +78,14 @@ const Home = () => {
           />
         </div>
       </div>
-      <div className="py-10 xl:px-32 dark:bg-black dark:text-white">
+      <div className="py-10 xl:px-32 dark:bg-[rgb(32,33,36)] dark:text-white">
         <h1 className="text-3xl pl-10 xl:pl-16 py-12">Whats on your mind?</h1>
         <Slider allRestaurants={allRestaurants} />
       </div>
-      <div id="popular" className="dark:bg-black dark:text-white py-10">
+      <div id="popular" className="dark:bg-[rgb(32,33,36)] dark:text-white py-10">
         <h1 className="text-3xl pl-10 xl:pl-48 py-8">Popular Foods</h1>
-        <Card count={count} allRestaurants={allRestaurants} />
+        {/* <Card count={count} allRestaurants={allRestaurants} /> */}
+        <Restaurants count={count} />
         {count === 12 ? (
         <div className="flex justify-center items-center py-10">
           <h1

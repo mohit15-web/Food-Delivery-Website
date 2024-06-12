@@ -122,7 +122,7 @@ function RestaurantDetails() {
         <Loader />
       ) : (
         <>
-          <h1 className="text-black text-xl xl:text-2xl absolute left-20 xl:left-96 top-32">
+          <h1 className="text-black dark:text-white text-xl xl:text-2xl absolute left-20 xl:left-96 top-32">
             Recommended ({menuItems.length})
           </h1>
           <div>{renderedMenuItems}</div>

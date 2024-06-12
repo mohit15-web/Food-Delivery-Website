@@ -14,7 +14,7 @@ import Payment from "./components/Payment";
 import { Checkout } from "./components/Checkout";
 const App = () => {
   return (
-    <div className="App dark:bg-black">
+    <div className="App dark:bg-[rgb(32,33,36)]">
       <ScrollToTop/>
       <ToastContainer />
       <Navbar />

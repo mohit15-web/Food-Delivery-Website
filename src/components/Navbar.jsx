@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { Menu, MoonIcon, Sun, X } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Menu, MoonIcon, ShoppingCart, Sun, X } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import profileSvg from "../assets/SVG/profile.svg";
 import SidebarDemo from "./SidebarDemo";
 import { useTheme } from "../ThemeContext/ThemseContext"; // Make sure the file path is correct
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { MAKE_CART_EMPTY } from "../store/Reducers";
 
 let menuItems = [
   {
@@ -16,21 +18,25 @@ let menuItems = [
     name: "Food",
     href: "/food",
   },
-  {
-    name: "Cart",
-    href: "/cart",
-  },
+  // {
+  //   name: "Cart",
+  //   href: "/cart",
+  // },
   {
     name: "Ask AI",
     href: "/askai",
   },
-  
 ];
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
   const { darkMode, setDarkMode } = useTheme();
+  const navigate = useNavigate();
+
+  const store = useSelector((store) => store.cart.cartItems);
+  console.log(store);
+  const dispatch = useDispatch();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -48,7 +54,7 @@ function Navbar() {
   console.log(user?.displayName, "user");
 
   return (
-    <nav className="fixed z-50 w-full bg-white pb-6 px-10 xl:p-0 dark:bg-black dark:text-white">
+    <nav className="fixed z-50 w-full bg-white pb-6 px-10 xl:p-0 dark:bg-[rgb(32,33,36)] dark:text-white">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-6 sm:px-6 lg:px-8">
         <Link to="/">
           <div className="flex gap-2  justify-center items-center">
@@ -68,6 +74,16 @@ function Navbar() {
           </ul>
         </div>
         <div className="hidden lg:flex justify-center items-center gap-3">
+          <div className="relative cursor-pointer" onClick={() => navigate("/cart")}>
+            {store.length > 0 ? (
+              <span className="absolute -top-3 -right-3 bg-green-600 text-white font-semibold rounded-full w-[25px] h-[25px] flex justify-center items-center ">
+                {store.length}
+              </span>
+            ) : (
+              ""
+            )}
+            <ShoppingCart className="h-8 w-8" />{" "}
+          </div>
           <button onClick={toggleDarkMode} className="mx-4">
             {!darkMode ? <Sun /> : <MoonIcon />}
           </button>
@@ -89,9 +105,12 @@ function Navbar() {
                     theme: "colored",
                   });
 
+                  dispatch(MAKE_CART_EMPTY());
+
+
                   setTimeout(() => {
-                  window.location.reload();
-                  },[1500])
+                    window.location.reload();
+                  }, [1500]);
                 }}
               >
                 logout

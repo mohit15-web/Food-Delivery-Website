@@ -37,7 +37,7 @@ export function Checkout() {
     <div className="py-40">
       <div className="mx-auto my-4 max-w-4xl md:my-6">
         {cart.length === 0 ? (
-          <div className=" flex flex-col justify-center items-center dark:bg-black dark:text-white">
+          <div className=" flex flex-col justify-center items-center dark:bg-[rgb(32,33,36)] dark:text-white">
           <img src={cartLogo} alt="cartLogo" className="h-60 w-60" />
           <h1>Cart is empty</h1>
         </div>

@@ -2,7 +2,7 @@ import logo from '../assets/logo.png';
 
 export function Footer() {
   return (
-    <section className="relative overflow-hidden py-20 dark:bg-black dark:text-white">
+    <section className="relative overflow-hidden py-20 dark:bg-[rgb(32,33,36)] dark:text-white">
       <div className="relative z-10 mx-auto max-w-7xl px-4">
         <div className="-m-6 flex flex-wrap">
           <div className="w-full p-6 md:w-1/2 lg:w-5/12">

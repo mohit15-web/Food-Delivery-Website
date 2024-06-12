@@ -113,7 +113,7 @@ const SidebarDemo = ({ open, setOpen }) => {
   };
 
   return (
-    <div className="absolute dark:bg-black dark:text-white top-0 right-0 text-black border z-20 bg-white">
+    <div className="absolute dark:bg-[rgb(32,33,36)] dark:text-white top-0 right-0 text-black border z-20 bg-white">
       <button
         className="absolute left-0 top-0 z-50 pt-4 pl-4"
         onClick={() => {

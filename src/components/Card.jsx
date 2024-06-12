@@ -8,12 +8,12 @@ const Card = ({ count, allRestaurants, name = "" }) => {
   return (
     <div
       className="flex flex-wrap justify-center items-center px-10 xl:px-32 gap-16
-       dark:bg-black dark:text-white "
+       dark:bg-[rgb(32,33,36)] dark:text-white "
     >
       {allRestaurants?.slice(0, count).filter((item) => item?.info?.name?.toLowerCase().includes(name?.toLowerCase())).map((item) => (
         <div
           key={item.info.id}
-          className=" w-80 dark:bg-black dark:text-white bg-white rounded-lg shadow-md overflow-hidden m-4 hover:shadow-2xl hover:cursor-pointer hover:scale-105 ease-in-out duration-200 dark:border
+          className=" w-80 dark:bg-[rgb(32,33,36)] dark:text-white bg-white rounded-lg shadow-md overflow-hidden m-4 hover:shadow-2xl hover:cursor-pointer hover:scale-105 ease-in-out duration-200 dark:border
         dark:border-gray-400 flex flex-col items-center"
           onClick={() => {
             navigate(`/ReastaurantDetail/${item.info.id}`);
