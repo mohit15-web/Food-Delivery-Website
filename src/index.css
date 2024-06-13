@@ -51,3 +51,9 @@ h1 {
 .markdown-content p {
   margin: 20px 0;
 }
+
+.active-link {
+  text-decoration: underline;
+  font-weight: bold;
+  color: red; /* or any color you prefer for active links */
+}

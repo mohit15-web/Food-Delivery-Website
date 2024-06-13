@@ -25,8 +25,10 @@ export function Cart() {
 
     let sum = cart.reduce((acc, curr) => {
       let temp = parseFloat(curr.costForTwo?.split(' ')[0].slice(1))
+      console.log(temp , "temp");
       const itemPrice = ((curr.price || curr.defaultPrice) / 100 || temp) ;
       const itemTotal = itemPrice * curr.quantity;
+      console.log(acc + itemTotal , "total");
       return acc + itemTotal;
     }, 0);
 
@@ -78,7 +80,7 @@ export function Cart() {
                       <p className="text-sm">{product.color}</p>
                     </div>
                     <div className="text-right flex justify-center items-center">
-                      <IndianRupee />
+                      {/* <IndianRupee />  */}
                       <p className="text-xl font-semibold">
                         {(product?.defaultPrice || product?.price) / 100 ||
                           product.costForTwo.slice(0, 4)}

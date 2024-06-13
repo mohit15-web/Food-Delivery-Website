@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Menu, MoonIcon, ShoppingCart, Sun, X } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import profileSvg from "../assets/SVG/profile.svg";
 import SidebarDemo from "./SidebarDemo";
@@ -66,9 +66,15 @@ function Navbar() {
           <ul className="inline-flex space-x-8">
             {menuItems.map((item) => (
               <li key={item.name}>
-                <Link to={item.href}>
-                  <p className="text-lg hover:underline">{item.name}</p>
-                </Link>
+                <NavLink 
+                  key={item.name}
+                  to={item.href}
+                  className={({ isActive, isPending }) =>
+                    isPending ? "pending" : isActive ? "text-red-500 " : ""
+                  }
+                >
+                  {item.name}
+                </NavLink>
               </li>
             ))}
           </ul>
@@ -144,13 +150,18 @@ function Navbar() {
               <div className="mt-6">
                 <nav className="grid gap-y-4">
                   {menuItems.map((item) => (
-                    <Link key={item.name} to={item.href}>
+                    <NavLink 
+                    key={item.name}
+                    to={item.href}
+                    activeClassName="active-link"
+                    className="text-lg hover:underline"
+                    >
                       <p className="-m-3 flex items-center rounded-md p-3 text-sm font-semibold hover:bg-gray-50">
                         <span className="ml-3 text-base font-medium text-gray-900">
                           {item.name}
                         </span>
                       </p>
-                    </Link>
+                    </NavLink>
                   ))}
                 </nav>
               </div>
