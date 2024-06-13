@@ -11,6 +11,13 @@ const Payment = ({total , name , address , contact}) => {
 
   const handlePayment = async (total) => {
 
+    if(!total || !name || !address || !contact){
+      toast.error("Please fill all the details", {
+        position: "bottom-right",
+        theme: "colored",
+      });
+      return;
+    }
     const res = await loadRazorpayScript(
       "https://checkout.razorpay.com/v1/checkout.js"
     );
@@ -55,7 +62,7 @@ const Payment = ({total , name , address , contact}) => {
     const paymentObject = new window.Razorpay(options);
     paymentObject.open();
 
-    dispatch(MAKE_CART_EMPTY)
+    dispatch(MAKE_CART_EMPTY())
     navigate('/')
   };
 
