@@ -18,10 +18,6 @@ let menuItems = [
     name: "Food",
     href: "/food",
   },
-  // {
-  //   name: "Cart",
-  //   href: "/cart",
-  // },
   {
     name: "Ask AI",
     href: "/askai",
@@ -63,7 +59,7 @@ function Navbar() {
           </div>
         </Link>
         <div className="hidden lg:block">
-          <ul className="inline-flex space-x-8">
+          <ul className="inline-flex space-x-8 text-lg">
             {menuItems.map((item) => (
               <li key={item.name}>
                 <NavLink 
@@ -88,7 +84,7 @@ function Navbar() {
             ) : (
               ""
             )}
-            <ShoppingCart className="h-8 w-8" />{" "}
+            <ShoppingCart className="h-8 w-8 hover:text-red-500" />{" "}
           </div>
           <button onClick={toggleDarkMode} className="mx-4">
             {!darkMode ? <Sun /> : <MoonIcon />}

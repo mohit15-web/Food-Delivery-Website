@@ -1,4 +1,4 @@
-import { X } from "lucide-react";
+import { IndianRupee, X } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { IMG_CDN_URL } from "../constants";
 import { useEffect, useState,} from "react";
@@ -203,8 +203,9 @@ export function Checkout() {
                         </div>
                       </div>
                       <div className="ml-auto flex flex-col items-end justify-between">
-                        <p className="text-right text-sm font-bold ">
-                          {product.price}
+                        <p className="text-right text-lg font-bold flex justify-center items-center "><IndianRupee />
+                        {(product?.defaultPrice || product?.price) / 100 ||
+                          product.costForTwo.slice(1, 4)}
                         </p>
                         <button
                           type="button"

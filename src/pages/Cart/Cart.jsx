@@ -81,9 +81,9 @@ export function Cart() {
                     </div>
                     <div className="text-right flex justify-center items-center">
                       {/* <IndianRupee />  */}
-                      <p className="text-xl font-semibold">
+                      <p className="text-xl font-semibold flex justify-center items-center"> <IndianRupee/>
                         {(product?.defaultPrice || product?.price) / 100 ||
-                          product.costForTwo.slice(0, 4)}
+                          product.costForTwo.slice(1, 4)}
                       </p>
                     </div>
                   </div>
