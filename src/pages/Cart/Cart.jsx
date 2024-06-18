@@ -37,6 +37,14 @@ export function Cart() {
   }, [cart]);
 
   const handlePayment = () => {
+     const user = JSON.parse(localStorage.getItem("user"));
+    if (!user) {
+      toast.error("Please login for checkout", {
+        position: "bottom-right",
+        theme: "colored",
+      });
+      return;
+    }
     navigate("/checkout");
   };
 

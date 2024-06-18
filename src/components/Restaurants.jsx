@@ -10,14 +10,7 @@ const Restaurants = ({ count }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate();
   const handleAddCart = (item) => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (!user) {
-      toast.error("Please login to add item to cart", {
-        position: "bottom-right",
-        theme: "colored",
-      });
-      return;
-    }
+
     dispatch(ADD_TO_CART(item));
     toast.success("Item added to cart!", {
       position: "bottom-right",

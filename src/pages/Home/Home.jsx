@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import getRestaurants from "../../utils/FetchApi";
 import { useNavigate } from "react-router-dom";
 import Restaurants from "../../components/Restaurants";
+import Card from "../../components/Card";
 
 const Home = () => {
   const [count, setCount] = useState(12);
