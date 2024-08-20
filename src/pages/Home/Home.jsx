@@ -6,7 +6,6 @@ import Slider from "../../components/Carousel";
 import { useEffect, useState } from "react";
 import getRestaurants from "../../utils/FetchApi";
 import { useNavigate } from "react-router-dom";
-import Restaurants from "../../components/Restaurants";
 import Card from "../../components/Card";
 
 const Home = () => {
@@ -86,7 +85,9 @@ const Home = () => {
       <div id="popular" className="dark:bg-[rgb(32,33,36)] dark:text-white py-10">
         <h1 className="text-3xl pl-10 xl:pl-48 py-8">Popular Foods</h1>
         {/* <Card count={count} allRestaurants={allRestaurants} /> */}
-        <Restaurants count={count} />
+        {/* <Card count={count} /> */}
+      <Card count={count} allRestaurants={allRestaurants} name={name}/>
+
         {count === 12 ? (
         <div className="flex justify-center items-center py-10">
           <h1
