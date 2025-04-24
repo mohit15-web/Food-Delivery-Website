@@ -12,9 +12,8 @@ const AskAi = () => {
   async function handleSendData() {
     setLoading(true);
     try {
-      const API_KEY = "AIzaSyAYhghPB47muOGdbJ-p26A7AUxRSxQ94cw"; // Replace with your API key
-      const genAI = new GoogleGenerativeAI(API_KEY);
-      const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+      const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
+      const model = genAI.getGenerativeModel({ model: import.meta.env.VITE_GEMINI_MODEL_NAME });
 
       const result = await model.generateContent(input);
       const response = result.response;

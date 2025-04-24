@@ -58,6 +58,21 @@ function Navbar() {
             <h1 className="text-lg">EatsExpress</h1>
           </div>
         </Link>
+        <div className="flex gap-4 lg:hidden">
+        <div className="relative cursor-pointer" onClick={() => navigate("/cart")}>
+            {store.length > 0 ? (
+              <span className="absolute -top-3 -right-3 bg-green-600 text-white font-semibold rounded-full w-[25px] h-[25px] flex justify-center items-center ">
+                {store.length}
+              </span>
+            ) : (
+              ""
+            )}
+            <ShoppingCart className="h-8 w-8 hover:text-red-500" />{" "}
+          </div>
+          <button onClick={toggleDarkMode} className="mx-4">
+            {!darkMode ? <Sun /> : <MoonIcon />}
+          </button>
+        </div>
         <div className="hidden lg:block">
           <ul className="inline-flex space-x-8 text-lg">
             {menuItems.map((item) => (
@@ -132,6 +147,7 @@ function Navbar() {
                 <div className="inline-flex items-center space-x-2">
                   <span className="font-bold text-xl">EatsExpress</span>
                 </div>
+                
                 <div className="-mr-2">
                   <button
                     type="button"
